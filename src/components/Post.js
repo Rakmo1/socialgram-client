@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime'
 
+//Mui
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -23,13 +26,14 @@ const styles={
 }
 class Post extends Component{
   render(){
+    dayjs.extend(relativeTime);
     const {classes, post: {userImage, user, createdAt, title, commentCount, likeCount}} =this.props;
     return(
       <Card className={classes.card}>
         <CardMedia image={userImage} title="Profile Image" className={classes.image}/>
         <CardContent>
           <Typography variant="h4" color="secondary" component={Link} to="/user/:userId">{user}</Typography>  
-          <Typography variant="body1" color="textSecondary">Posted At {createdAt.substring(0,10)}</Typography>  
+          <Typography variant="body1" color="textSecondary">{dayjs(createdAt).fromNow()}</Typography>  
           <Typography variant="body1" className={classes.content}>{title}</Typography>  
         </CardContent>
               

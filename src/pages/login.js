@@ -11,36 +11,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 
 const styles=(theme)=>({
-  form:{
-    display: 'flex',
-    flexDirection: 'column',
-    // textAlign: 'center'
-  },
-  textfield: {
-    margin: '10px auto',
-    // width: '100%'
-  },
-  button:{
-    margin: '10px auto 10px auto',
-    // display: 'block',
-    // backgroundColor: 'red',
-    // color: 'primary',
-  },
-  image:{
-    margin: '0 auto 0 auto',
-    // display: 'block'
-  },
-  customError:{
-    color: 'red'
-  },
-  circular:{
-    // display: 'block',
-    margin: '0 auto 0 auto'
-  },
-  bottomsignup:{
-    margin: '0 0 0 auto',
-    // display: 'block'
-  }
+  ...theme.spread
 });
 class Login extends Component{
   constructor(){
@@ -72,6 +43,7 @@ class Login extends Component{
       this.setState({
         loading: false 
       });
+      localStorage.setItem('Fbtoken',`Bearer ${token}`);
       this.props.history.push('/');
     })
     .catch(err=>{
@@ -88,8 +60,8 @@ class Login extends Component{
         <Grid item sm/> 
         <Grid item sm >
           
-          <img src="../images.jfif" width="80px" className={classes.image}/>
           <form noValidate onSubmit={this.handleSubmit} className={classes.form}>
+            <img src="../images.jfif" width="80px" className={classes.image} alt="logo"/>
             <TextField fullWidth color="secondary" className={classes.textfield} error={this.state.errors.email?true:false} onChange={this.handleChange} type="email" label="Email" name="email" variant="outlined" helperText={this.state.errors.email}/>
             <TextField fullWidth color="secondary" className={classes.textfield} error={this.state.errors.password?true:false} onChange={this.handleChange} type="password" label="Password" name="password" variant="outlined" helperText={this.state.errors.password}/>
             {this.state.errors.general && 
